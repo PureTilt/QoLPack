@@ -11,6 +11,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.lwjgl.util.vector.Vector2f;
 
+import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
@@ -108,6 +109,8 @@ public class qolp_shieldSnapping extends BaseEveryFrameCombatPlugin {
         if (!mode.equals(shieldMods.rememberTarget)) mode2Target = null;
         if (!mode.equals(shieldMods.shipSide)) mode3Angle = null;
         if (!mode.equals(shieldMods.direction)) mode4Direction = null;
+//        engine.getViewport().setExternalControl(true);
+//        engine.getViewport().setCenter(player.getLocation());
         if (mode.equals(shieldMods.none)) return;
         if (mode.equals(shieldMods.snapIfTarget)) {
             engine.maintainStatusForPlayerShip("qolp_shieldSnapping", "graphics/icons/hullsys/qolp_shieldSnap.png", "Snapping mode", "1 snap if target", false);
@@ -132,8 +135,8 @@ public class qolp_shieldSnapping extends BaseEveryFrameCombatPlugin {
                 mode3Angle = player.getShield().getFacing() - player.getFacing();
             } else {
                 Vector2f side = Misc.getUnitVectorAtDegreeAngle(mode3Angle + player.getFacing());
-                side.scale(100f);
-                Vector2f target = new Vector2f(side.x + player.getLocation().x, side.y + player.getLocation().y);
+                side.scale(1000);
+                Vector2f target = new Vector2f(side.x + player.getShield().getLocation().x, side.y + player.getShield().getLocation().y);
                 player.setShieldTargetOverride(target.x, target.y);
             }
             //engine.maintainStatusForPlayerShip("qolp_shieldSnappingInfo", "graphics/icons/hullsys/qolp_shieldSnap.png", "mode 3 info", player.getFacing() + "/" + mode3Angle + "/" + player.getShield().getFacing(), false);
@@ -141,9 +144,9 @@ public class qolp_shieldSnapping extends BaseEveryFrameCombatPlugin {
             engine.maintainStatusForPlayerShip("qolp_shieldSnapping", "graphics/icons/hullsys/qolp_shieldSnap.png", "Snapping mode", "4 direction", false);
             if (mode4Direction == null) {
                 mode4Direction = Misc.getUnitVectorAtDegreeAngle(player.getShield().getFacing());
-                mode4Direction.scale(100);
+                mode4Direction.scale(1000);
             } else {
-                Vector2f target = new Vector2f(mode4Direction.x + player.getLocation().x, mode4Direction.y + player.getLocation().y);
+                Vector2f target = new Vector2f(mode4Direction.x + player.getShield().getLocation().x, mode4Direction.y + player.getShield().getLocation().y);
                 player.setShieldTargetOverride(target.x, target.y);
             }
         }

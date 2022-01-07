@@ -2,12 +2,14 @@ package data.plugins;
 
 import com.fs.starfarer.api.GameState;
 import com.fs.starfarer.api.Global;
-import com.fs.starfarer.api.combat.*;
+import com.fs.starfarer.api.combat.BaseEveryFrameCombatPlugin;
+import com.fs.starfarer.api.combat.CombatEngineAPI;
+import com.fs.starfarer.api.combat.ShipAPI;
 import com.fs.starfarer.api.input.InputEventAPI;
+import com.fs.starfarer.api.util.Misc;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.lwjgl.util.vector.Vector2f;
 
 import java.awt.*;
 import java.io.IOException;
@@ -17,32 +19,53 @@ import java.util.List;
 public class qolp_systemNotify extends BaseEveryFrameCombatPlugin {
 
     CombatEngineAPI engine;
+
     List<ShipAPI> shipsAlreadyReporter = new ArrayList<>();
+
     float
-    textSize = 30;
-    Color textColor = new Color(255,0,0,255);
+            textSize = 30;
+    Color
+            positiveTextColor = Misc.getPositiveHighlightColor(),
+            negativeTextColor = Misc.getNegativeHighlightColor();
 
     public static final String ID = "qolp_AutoShieldAfterOverload";
     public static final String SETTINGS_PATH = "QoLPack.ini";
 
+    @Override
+    public void init(CombatEngineAPI engine) {
+        this.engine = engine;
+        Color temp;
+        try {
+            JSONObject cfg = Global.getSettings().getMergedJSONForMod(SETTINGS_PATH, ID);
+            textSize = cfg.getInt("TextSize");
+            temp = getColor(cfg.getJSONArray("OnTextColor"));
+            if (temp.getAlpha() != 0) positiveTextColor = temp;
+            temp = getColor(cfg.getJSONArray("OffTextColor"));
+            if (temp.getAlpha() != 0) negativeTextColor = temp;
+        } catch (IOException | JSONException e) {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void advance(float amount, List<InputEventAPI> events) {
         if (engine == null) return;
         if (Global.getCurrentState().equals(GameState.TITLE)) return;
-        for (ShipAPI ship : engine.getShips()){
+        for (ShipAPI ship : engine.getShips()) {
             if (ship == engine.getPlayerShip()) continue;
             if (shipsAlreadyReporter.contains(ship)) continue;
-            if (ship.getSystem() != null && ship.getSystem().isActive()){
-                engine.addFloatingText(ship.getLocation(), "System was activated" + "\n" + ship.getSystem().getDisplayName(), textSize, textColor, ship, 0.1f, 0.25f);
-                //engine.addFloatingText(new Vector2f(ship.getLocation().x, ship.getLocation().y + textSize), ship.getSystem().getDisplayName(), textSize, textColor, ship, 0.25f, 0.25f);
+            if (ship.getSystem() != null && ship.getSystem().isActive()) {
+                engine.addFloatingText(ship.getLocation(), ship.getSystem().getDisplayName(), textSize, positiveTextColor, ship, 2f, 0.75f);
                 shipsAlreadyReporter.add(ship);
             }
         }
         List<ShipAPI> cloneList = new ArrayList<>(shipsAlreadyReporter);
-        for (ShipAPI ship : cloneList){
-            if (!ship.getSystem().isActive()){
+        for (ShipAPI ship : cloneList) {
+            if (!ship.getSystem().isActive()) {
                 shipsAlreadyReporter.remove(ship);
+                if (ship.getSystem().getSpecAPI().isToggle() || ship.getSystem().getChargeActiveDur() > 1f) {
+                    engine.addFloatingText(ship.getLocation(), ship.getSystem().getDisplayName(), textSize, negativeTextColor, ship, 2f, 0.75f);
+                }
             }
         }
     }
@@ -54,17 +77,5 @@ public class qolp_systemNotify extends BaseEveryFrameCombatPlugin {
                 Math.min(255, Math.max(0, c.getInt(2))),
                 Math.min(255, Math.max(0, c.getInt(3)))
         );
-    }
-
-    @Override
-    public void init(CombatEngineAPI engine) {
-        this.engine = engine;
-        try {
-            JSONObject cfg = Global.getSettings().getMergedJSONForMod(SETTINGS_PATH, ID);
-            textSize = cfg.getInt("TextSize");
-            textColor = getColor(cfg.getJSONArray("TextColor"));
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
     }
 }

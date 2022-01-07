@@ -26,7 +26,7 @@ public class qolp_AutoShieldAfterSystem implements EveryFrameCombatPlugin {
         boolean enable = true;
         try {
             JSONObject cfg = Global.getSettings().getMergedJSONForMod(SETTINGS_PATH, ID);
-            enable = cfg.getBoolean("DisableAutoShieldOnAfterSystem");
+            enable = cfg.getBoolean("EnableAutoShieldOnAfterSystem");
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
