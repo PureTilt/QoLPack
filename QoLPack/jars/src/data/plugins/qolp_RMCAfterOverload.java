@@ -40,6 +40,7 @@ public class qolp_RMCAfterOverload extends BaseEveryFrameCombatPlugin {
         ShipAPI player = engine.getPlayerShip();
         if (!player.getFluxTracker().isOverloadedOrVenting()) return;
         for (InputEventAPI e : events) {
+            if (e.isConsumed()) continue;
             if (e.isRMBDownEvent()){
                 activateRMC = !activateRMC;
             }

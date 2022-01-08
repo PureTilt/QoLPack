@@ -73,6 +73,7 @@ public class qolp_shieldSnapping extends BaseEveryFrameCombatPlugin {
         if (engine.getPlayerShip() == null) return;
         for (InputEventAPI e : events) {
             if (e.isKeyDownEvent()) {
+                if (e.isConsumed()) continue;
                 if (e.getEventValue() == snapIfTarget) {
                     if (mode.equals(shieldMods.snapIfTarget)) mode = shieldMods.none;
                     else mode = shieldMods.snapIfTarget;
