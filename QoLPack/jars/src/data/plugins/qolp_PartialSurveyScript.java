@@ -9,9 +9,7 @@ import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI.SurveyLevel;
 import com.fs.starfarer.api.util.Misc;
-import lombok.extern.log4j.Log4j;
 
-@Log4j
 public class qolp_PartialSurveyScript implements EveryFrameScript {
 
     @Override
@@ -51,15 +49,12 @@ public class qolp_PartialSurveyScript implements EveryFrameScript {
     private void process(CampaignFleetAPI fleet, PlanetAPI planet) {
         String name = planet.getName();
         if (!isInRange(fleet, planet)) {
-            log.debug("Skipping " + name + " as it is too far away");
             return;
         }
         MarketAPI market = planet.getMarket();
         if (!canScan(market)) {
-            log.debug("Skipping " + name + " as it already has info");
             return;
         }
-        log.info("Setting " + name + " survey level");
         Misc.setPreliminarySurveyed(market, null, true);
     }
 }
