@@ -15,6 +15,20 @@ public class qolp_modPlugin extends BaseModPlugin {
     private JSONObject settings;
 
     @Override
+    public void afterGameSave() {
+        if (hasQol("ScavengeAsYouFly")) {
+            restoreAutoScavenge();
+        }
+    }
+
+    @Override
+    public void beforeGameSave() {
+        if (hasQol("ScavengeAsYouFly")) {
+            removeAutoScavenge();
+        }
+    }
+
+    @Override
     public void onApplicationLoad() throws Exception {
         settings = Global.getSettings().getMergedJSONForMod(SETTINGS_PATH, ID);
         if (hasQol("BetterSensorBurst")) {
