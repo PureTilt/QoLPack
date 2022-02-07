@@ -1,0 +1,2 @@
+name,id,type,tags,activationDays,activationCooldown,durationDays,deactivationDays,deactivationCooldown,unlockedAtStart,defaultForAIFleet,musicSuppression,uiOn,uiOff,uiLoop,worldOn,worldOff,worldLoop,icon,plugin,ai,desc,sortOrder
+Auto Scavenge,auto_scavenge,TOGGLE,,0,,0,0,0,FALSE,,,ui_scavenge_on,,,,,,graphics/icons/abilities/auto_scavenge.png,data.plugins.qolp_AutoScavengeAbility,,Enable automatic picking through a debris field as you aproach it.,601
