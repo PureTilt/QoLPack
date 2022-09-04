@@ -18,6 +18,10 @@ public class qolp_AutoShieldAfterSystem implements EveryFrameCombatPlugin {
     public static final String ID = "qolp_AutoShieldAfterSystem";
     public static final String SETTINGS_PATH = "QoLPack.ini";
 
+    float
+            framesActive = 0,
+            maxFrames = 2;
+
     CombatEngineAPI engine;
 
     @Override
@@ -42,27 +46,38 @@ public class qolp_AutoShieldAfterSystem implements EveryFrameCombatPlugin {
 
     @Override
     public void advance(float amount, List<InputEventAPI> events) {
-        if (engine == null) return;
-        if (engine.getPlayerShip() == null) return;
+        if (engine == null || engine.getPlayerShip() == null) return;
         ShipAPI player = engine.getPlayerShip();
-        if (player.getSystem() == null) return;
-        if (player.getShield() == null || player.getShield().getType().equals(ShieldAPI.ShieldType.PHASE)) return;
+        if (player.getSystem() == null || player.getShield() == null || player.getShield().getType().equals(ShieldAPI.ShieldType.PHASE)) return;
+
+        if (player.getShield().isOn()){
+            shieldWasOn = true;
+        } else if (framesActive >= maxFrames && !systemActive){
+            shieldWasOn = false;
+            framesActive = 0;
+        }
+
+        if (shieldWasOn && !player.getShield().isOn() && framesActive <= maxFrames){
+            framesActive++;
+        }
+
         if (player.getSystem().isActive()) {
-            if (!systemActive) {
-                shieldWasOn = player.getShield().isOn();
-            }
             systemActive = true;
         } else {
             if (systemActive && shieldWasOn && player.getShield().isOff()) {
                 player.giveCommand(ShipCommand.TOGGLE_SHIELD_OR_PHASE_CLOAK, null, 0);
             }
             systemActive = false;
+            framesActive = 0;
         }
-        if (shieldWasOn && systemActive){
+        if (shieldWasOn && systemActive && !player.getShield().isOn()){
             engine.maintainStatusForPlayerShip("qolp_AutoShieldSystem", "graphics/icons/hullsys/fortress_shield.png", "Auto Shield", "Deploy shield after system", false);
         }
-        //Global.getLogger(qolp_AutoShieldAfterSystem.class).info(player.getSystem().isActive() + "/" + player.getShield().isOn());
-        //engine.maintainStatusForPlayerShip("qolp_qutoShieldSystem", null, "info", "allowed",false);
+        engine.maintainStatusForPlayerShip("qolp_AutoShieldSystem2", "graphics/icons/hullsys/fortress_shield.png", "Auto Shield", framesActive + "", false);
+
+        //Global.getLogger(qolp_AutoShieldAfterSystem.class).info(player.getSystem().isActive() + "/" + player.getShield().isOn() + "/" + framesActive);
+//        engine.maintainStatusForPlayerShip("qolp_qutoShieldSystem", null, "info", shieldWasOn + "",false);
+//        engine.maintainStatusForPlayerShip("qolp_qutoShieldSystem2", null, "info2", framesActive + "",false);
     }
 
     @Override

@@ -61,10 +61,13 @@ public class qolp_RMCAfterOverload extends BaseEveryFrameCombatPlugin {
             activateRMC = false;
         }
         if (activateRMC){
+            String text = "after overload";
+            if (player.getFluxTracker().isVenting()) text = "after venting";
             if (player.getVariant().getHullSpec().getShieldType() != ShieldAPI.ShieldType.NONE && player.getVariant().getHullSpec().getShieldType() != ShieldAPI.ShieldType.PHASE){
-                engine.maintainStatusForPlayerShip("qolp_AutoShield", "graphics/icons/hullsys/fortress_shield.png", "Auto Shield", "Deploy shield after overload", false);
+
+                engine.maintainStatusForPlayerShip("qolp_AutoShield", "graphics/icons/hullsys/fortress_shield.png", "Auto Shield", "Deploy shield " + text, false);
             } else if (player.getVariant().getHullSpec().getShieldType() == ShieldAPI.ShieldType.PHASE){
-                engine.maintainStatusForPlayerShip("qolp_AutoShield", "graphics/icons/hullsys/phase_cloak.png", "Auto Phase", "Enable phase after overload", false);
+                engine.maintainStatusForPlayerShip("qolp_AutoShield", "graphics/icons/hullsys/phase_cloak.png", "Auto Phase", "Enable phase " + text, false);
             }
         }
     }
