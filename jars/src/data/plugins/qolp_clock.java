@@ -12,9 +12,14 @@ import org.lwjgl.opengl.Display;
 import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
+import java.util.Calendar;
 import java.util.Date;
 
 public class qolp_clock implements EveryFrameScript {
+
+    qolp_clock (boolean USTime){
+        this.USTime = USTime;
+    }
 
     private static LazyFont.DrawableString TODRAW14;
     private static final float UIScaling = Math.min(1, Global.getSettings().getScreenScaleMult());
@@ -23,6 +28,8 @@ public class qolp_clock implements EveryFrameScript {
             triPadHeight,
             height,
             alpha = 1;
+
+    boolean USTime = false;
     
 
     static {
@@ -80,11 +87,22 @@ public class qolp_clock implements EveryFrameScript {
 
 
         Date currtime = new Date();
-        int hours = currtime.getHours();
-        int minutes = currtime.getMinutes();
+        Calendar data = Calendar.getInstance();
+        int hours = data.get(Calendar.HOUR_OF_DAY);
+        int minutes = data.get(Calendar.MINUTE);
         String inB = ":";
         if (minutes < 10) inB += "0";
-        String text = hours + inB + minutes;
+        String text = "";
+        if (USTime){
+            if (hours >= 12){
+                hours -= 12;
+                text = hours + inB + minutes + " PM";
+            } else {
+                text = hours + inB + minutes + " AM";
+            }
+        } else {
+            text = hours + inB + minutes;
+        }
 
         //text = "12:06";
 
@@ -96,7 +114,7 @@ public class qolp_clock implements EveryFrameScript {
         TODRAW14.setText(text);
         triPadArrow.render(0, height);
         float width = TODRAW14.getWidth();
-        int TextPosX = Math.round((35 * UIScaling) - (width * 0.5f));
+        int TextPosX = Math.round(((USTime ? 53 : 35) * UIScaling) - width * 0.5f);
         int TextPosY =  Math.round(height + TODRAW14.getHeight() * 0.5f + triPadHeight  * 0.5f + 4 * UIScaling);
         TODRAW14.setColor(black);
         TODRAW14.draw(TextPosX + 2, TextPosY - 1);

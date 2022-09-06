@@ -1,9 +1,12 @@
 package data.plugins;
 
 import com.fs.starfarer.api.BaseModPlugin;
+import com.fs.starfarer.api.EveryFrameScript;
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.util.Misc;
 import org.json.JSONException;
 import org.json.JSONObject;
+import data.plugins.qolp_AutoScavengeAbility;
 
 import java.io.IOException;
 
@@ -39,8 +42,13 @@ public class qolp_modPlugin extends BaseModPlugin {
 
     @Override
     public void onGameLoad(boolean newGame) {
+        try {
+            settings = Global.getSettings().getMergedJSONForMod(SETTINGS_PATH, ID);
+        } catch (IOException | JSONException e) {
+            throw new RuntimeException(e);
+        }
         if (hasQol("EnableClock")) {
-            addTransientScript(new qolp_clock());
+            addTransientScript(new qolp_clock(hasQol("12HourCLock")));
         }
         if (hasQol("PartialSurveyAsYouFly")) {
             addTransientScript(new qolp_PartialSurveyScript());
@@ -67,7 +75,7 @@ public class qolp_modPlugin extends BaseModPlugin {
     }
 
     private void notifyAboutState() {
-        String state = AutoScavengeAbility.isOn() ? "enabled" : "disabled";
+        String state = qolp_AutoScavengeAbility.isOn() ? "enabled" : "disabled";
         Global
             .getSector()
             .getCampaignUI()
@@ -82,7 +90,7 @@ public class qolp_modPlugin extends BaseModPlugin {
     }
 
     private void removeAutoScavenge() {
-        boolean isOn = AutoScavengeAbility.isOn();
+        boolean isOn = qolp_AutoScavengeAbility.isOn();
         Global.getSector().getMemoryWithoutUpdate().set("$transpoffderAutoScavenge", isOn);
         Global.getSector().getCharacterData().removeAbility("auto_scavenge");
     }
@@ -90,6 +98,6 @@ public class qolp_modPlugin extends BaseModPlugin {
     private void restoreAutoScavenge() {
         Global.getSector().getCharacterData().addAbility("auto_scavenge");
         boolean isOn = Global.getSector().getMemoryWithoutUpdate().getBoolean("$transpoffderAutoScavenge");
-        AutoScavengeAbility.setOn(isOn);
+        qolp_AutoScavengeAbility.setOn(isOn);
     }
 }
