@@ -1,24 +1,19 @@
 package data.plugins;
 
-import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.combat.BaseEveryFrameCombatPlugin;
 import com.fs.starfarer.api.combat.CombatEngineAPI;
 import com.fs.starfarer.api.combat.ShieldAPI;
 import com.fs.starfarer.api.combat.ShipAPI;
 import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.util.Misc;
+import data.utils.qolp_getSettings;
 import org.json.JSONException;
-import org.json.JSONObject;
 import org.lwjgl.util.vector.Vector2f;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.List;
 
 public class qolp_shieldSnapping extends BaseEveryFrameCombatPlugin {
-
-    public final String ID = "qolp_shieldSnapping";
-    public final String SETTINGS_PATH = "QoLPack.ini";
 
     int snapIfTarget = 59;
     int rememberTarget = 60;
@@ -29,7 +24,7 @@ public class qolp_shieldSnapping extends BaseEveryFrameCombatPlugin {
 
 
     CombatEngineAPI engine;
-    private transient static shieldMods mode;
+    private static shieldMods mode;
 
     @Override
     public void init(CombatEngineAPI engine) {
@@ -37,13 +32,12 @@ public class qolp_shieldSnapping extends BaseEveryFrameCombatPlugin {
         int defaultMode = 0;
         boolean saveMode = false;
         try {
-            JSONObject cfg = Global.getSettings().getMergedJSONForMod(SETTINGS_PATH, ID);
-            defaultMode = cfg.getInt("DefaultShieldSnapMode");
-            snapIfTarget = cfg.getInt("snapIfTarget");
-            rememberTarget = cfg.getInt("rememberTarget");
-            shipSide = cfg.getInt("shipSide");
-            direction = cfg.getInt("direction");
-            saveMode = cfg.getBoolean("SaveModeBetweenEncounters");
+            snapIfTarget = qolp_getSettings.getInt("snapIfTarget");
+            rememberTarget = qolp_getSettings.getInt("rememberTarget");
+            shipSide = qolp_getSettings.getInt("shipSide");
+            direction = qolp_getSettings.getInt("direction");
+            defaultMode = qolp_getSettings.getInt("DefaultShieldSnapMode");
+            saveMode = qolp_getSettings.getBoolean("SaveModeBetweenEncounters");
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
@@ -70,7 +64,7 @@ public class qolp_shieldSnapping extends BaseEveryFrameCombatPlugin {
 
     @Override
     public void processInputPreCoreControls(float amount, List<InputEventAPI> events) {
-        if (engine.getPlayerShip() == null) return;
+        if (engine == null || engine.getPlayerShip() == null) return;
         for (InputEventAPI e : events) {
             if (e.isKeyDownEvent()) {
                 if (e.isConsumed()) continue;

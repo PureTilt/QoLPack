@@ -7,9 +7,8 @@ import com.fs.starfarer.api.combat.CombatEngineAPI;
 import com.fs.starfarer.api.combat.ShipAPI;
 import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.util.Misc;
-import org.json.JSONArray;
+import data.utils.qolp_getSettings;
 import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.awt.*;
 import java.io.IOException;
@@ -30,8 +29,6 @@ public class qolp_systemNotify extends BaseEveryFrameCombatPlugin {
 
     boolean allowPlayer = false;
 
-    public static final String ID = "qolp_AutoShieldAfterOverload";
-    public static final String SETTINGS_PATH = "QoLPack.ini";
 
     @Override
     public void init(CombatEngineAPI engine) {
@@ -39,18 +36,17 @@ public class qolp_systemNotify extends BaseEveryFrameCombatPlugin {
         Color temp;
         boolean enable = true;
         try {
-            JSONObject cfg = Global.getSettings().getMergedJSONForMod(SETTINGS_PATH, ID);
-            textSize = cfg.getInt("TextSize");
-            enable = cfg.getBoolean("EnableSystemNotify");
-            allowPlayer = cfg.getBoolean("AllowForPlayerShip");
-            temp = getColor(cfg.getJSONArray("OnTextColor"));
-            if (temp.getAlpha() != 0) positiveTextColor = temp;
-            temp = getColor(cfg.getJSONArray("OffTextColor"));
-            if (temp.getAlpha() != 0) negativeTextColor = temp;
+            textSize = qolp_getSettings.getInt("TextSize");
+            enable = qolp_getSettings.getBoolean("EnableSystemNotify");
+            allowPlayer = qolp_getSettings.getBoolean("AllowForPlayerShip");
+            temp = getColor(qolp_getSettings.getString("OnTextColor"));
+            if (temp.getAlpha() >= 1) positiveTextColor = temp;
+            temp = getColor(qolp_getSettings.getString("OffTextColor"));
+            if (temp.getAlpha() >= 1) negativeTextColor = temp;
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
-        if (!enable){
+        if (!enable) {
             engine.removePlugin(this);
         }
     }
@@ -60,7 +56,7 @@ public class qolp_systemNotify extends BaseEveryFrameCombatPlugin {
         if (engine == null) return;
         if (Global.getCurrentState().equals(GameState.TITLE)) return;
         for (ShipAPI ship : engine.getShips()) {
-            if (ship == engine.getPlayerShip() && !allowPlayer) continue;
+            if (!allowPlayer && ship == engine.getPlayerShip()) continue;
             if (ship.getHullSize().equals(ShipAPI.HullSize.FIGHTER)) continue;
             if (shipsAlreadyReporter.contains(ship)) continue;
             if (ship.getSystem() != null && ship.getSystem().isActive()) {
@@ -79,12 +75,13 @@ public class qolp_systemNotify extends BaseEveryFrameCombatPlugin {
         }
     }
 
-    Color getColor(JSONArray c) throws JSONException {
+    Color getColor(String c) throws JSONException {
+        String[] colorString = c.replace("[","").replace("]","").split(",");
         return new Color(
-                Math.min(255, Math.max(0, c.getInt(0))),
-                Math.min(255, Math.max(0, c.getInt(1))),
-                Math.min(255, Math.max(0, c.getInt(2))),
-                Math.min(255, Math.max(0, c.getInt(3)))
+                Math.min(255, Math.max(0, Integer.parseInt(colorString[0]))),
+                Math.min(255, Math.max(0, Integer.parseInt(colorString[1]))),
+                Math.min(255, Math.max(0, Integer.parseInt(colorString[2]))),
+                Math.min(255, Math.max(0, Integer.parseInt(colorString[3])))
         );
     }
 }

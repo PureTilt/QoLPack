@@ -4,7 +4,7 @@
 	"author":"PureTilt",
 	"version":"1.1",
 	"description":"Adds Quality of Life",
-	"gameVersion":"0.95.1a-RC6",
+	"gameVersion":"0.96",
 	"jars":["jars/QoLPack.jar"],
 	"dependencies": [
         {

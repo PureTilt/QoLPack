@@ -13,7 +13,8 @@ import com.fs.starfarer.api.util.Misc;
 public class qolp_AutoScavengeAbility extends BaseToggleAbility {
 
     public static boolean isOn() {
-        return getInstance().isActive();
+        if (getInstance() != null) return getInstance().isActive();
+        return false;
     }
 
     public static void setOn(boolean isOn) {
