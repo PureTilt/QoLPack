@@ -25,6 +25,12 @@ settign_header_3,Misc,Header,Clock,,,,,
 EnableClock,Enable Clock,Boolean,true,,Real time clock in compaign in left top corner under game date,,,
 12HourCLock,12 Hour Clock,Boolean,false,,12 hours AM/PM style clock,,,
 ,,,,,,,,
+settign_header_4,TransponderOff,,,,,,,TransponderOff
+BetterSensorBurst,Better Sensor Burst,Boolean,true,,Do not disable Sustained Burn when using Active Sensor Burst. Fleet will move slowly for the cool-down duration (instead of doing full stop),,,TransponderOff
+PartialSurveyAsYouFly,Partial Survey As You Fly,Boolean,true,,Automatically provide partial survey for planets within your sensor range.,,,TransponderOff
+ScavengeAsYouFly,Scavenge As You Fly,Boolean,true,,Use Scavenge ability as soon as it is usable. There is a new ability (with blue scavenge icon) that is used to turn this functionality on,,,TransponderOff
+Transpoffder,Scavenge As You Fly,Boolean,true,,Automatically turn off fleet transponder whenever transitioning to Hyperspace,,,TransponderOff
+,,,,,,,,
 #luna_versionHeader,Version Checker,Header,Version Checker,,,,,
 #luna_enableVC,Enable Version Checker,Boolean,true,,"Enables Version Checker if set to true. Change is only applied when the game is [restarted]. 
 
