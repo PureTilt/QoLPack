@@ -2,7 +2,7 @@
 	"id":"pt_qolpack",
 	"name":"QoL Pack",
 	"author":"PureTilt",
-	"version":"1.1",
+	"version":"1.2",
 	"description":"Adds Quality of Life",
 	"gameVersion":"0.96",
 	"jars":["jars/QoLPack.jar"],
