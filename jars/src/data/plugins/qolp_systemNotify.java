@@ -15,6 +15,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static data.utils.qolp_getSettings.*;
+
 public class qolp_systemNotify extends BaseEveryFrameCombatPlugin {
 
     CombatEngineAPI engine;
@@ -36,13 +38,13 @@ public class qolp_systemNotify extends BaseEveryFrameCombatPlugin {
         Color temp;
         boolean enable = true;
         try {
-            textSize = qolp_getSettings.getInt("TextSize");
-            enable = qolp_getSettings.getBoolean("EnableSystemNotify");
-            allowPlayer = qolp_getSettings.getBoolean("AllowForPlayerShip");
-            temp = getColor(qolp_getSettings.getString("OnTextColor"));
-            if (temp.getAlpha() >= 1) positiveTextColor = temp;
-            temp = getColor(qolp_getSettings.getString("OffTextColor"));
-            if (temp.getAlpha() >= 1) negativeTextColor = temp;
+            textSize = getInt("TextSize");
+            enable = getBoolean("EnableSystemNotify");
+            allowPlayer = getBoolean("AllowForPlayerShip");
+            temp = getColor("OnTextColor");
+            if (getBoolean("systemNotifcustomColors")) positiveTextColor = temp;
+            temp = getColor("OffTextColor");
+            if (getBoolean("systemNotifcustomColors")) negativeTextColor = temp;
         } catch (IOException | JSONException e) {
             e.printStackTrace();
         }
@@ -73,15 +75,5 @@ public class qolp_systemNotify extends BaseEveryFrameCombatPlugin {
                 }
             }
         }
-    }
-
-    Color getColor(String c) throws JSONException {
-        String[] colorString = c.replace("[","").replace("]","").split(",");
-        return new Color(
-                Math.min(255, Math.max(0, Integer.parseInt(colorString[0]))),
-                Math.min(255, Math.max(0, Integer.parseInt(colorString[1]))),
-                Math.min(255, Math.max(0, Integer.parseInt(colorString[2]))),
-                Math.min(255, Math.max(0, Integer.parseInt(colorString[3])))
-        );
     }
 }

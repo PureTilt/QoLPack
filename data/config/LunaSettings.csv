@@ -1,14 +1,14 @@
 fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
-EnableAutoShieldOnAfterSystem,Deplay shield after system,Boolean,true,,If system folds shield deploy it after system ends if it was deployed when you activated the system,,,
-EnableAutoShieldOnAfterOverload,Deplay shield after overload,Boolean,true,,Press RMB while overloaded/venting to deploy shield/activate phase cloak right after overload/venting ends,,,
+EnableAutoShieldOnAfterSystem,Deploy shield after system,Boolean,true,,If system folds shield deploy it after system ends if it was deployed when you activated the system,,,
+EnableAutoShieldOnAfterOverload,Deploy shield after overload,Boolean,true,,Press RMB while overloaded/venting to deploy shield/activate phase cloak right after overload/venting ends,,,
 ,,,,,,,,
-settign_header_1,Deplay shield after overload,Header,Shield snapping,,"Settings for shield auto targetting, controls shield for you",0,4,
+settign_header_1,Deploy shield after overload,Header,Shield snapping,,"Settings for shield auto targetting, controls shield for you",0,4,
 DefaultShieldSnapMode,Default Shield Snap Mode,Int,1,,"0 - No snapping
 1 - Snaps to ship's target follow mouse if no target
 2 - Snaps to current target and stay snap to it even if target changes
 3 - Snaps to current position relative to the ship
 4 - Snaps to current position relative to the world",0,4,
-SaveModeBetweenEncounters,Save Mode Between Encounters,Boolean,false,,Saves selected mode between combat ecnounters,,,
+SaveModeBetweenEncounters,Save Mode Between Encounters,Boolean,false,,Saves selected mode between combat encounters,,,
 snapIfTarget,Snap If Target,Keycode,59,,Snaps to ship's target follow mouse if no target,,,
 rememberTarget,Remember Target,Keycode,60,,Snaps to current target and stay snap to it even if target changes,,,
 shipSide,Ship Side,Keycode,61,,Snaps to current position relative to the ship,,,
@@ -17,19 +17,41 @@ direction,Direction,Keycode,62,,Snaps to current position relative to the world,
 settign_header_2,System Notify settings,Header,System Notify settings,,,,,
 EnableSystemNotify,Enable System Notify,Boolean,true,,,,,
 TextSize,Text Size,Int,30,,,,,
-OnTextColor,On Text Color,String,"0,255,0,0",,"Color is in RGBA, set alpha (last number) to 0 to NOT ovverride",,,
-OffTextColor,Off Text Color,String,"255,0,0,0",,"Color is in RGBA, set alpha (last number) to 0 to NOT ovverride",,,
+systemNotifcustomColors,Custom Text color,Boolean,false,,"Enable custom color for text, if disabled uses UI color including from UI mods",,,
+OnTextColor,On Text Color,String,#00ff00,,,,,
+OffTextColor,Off Text Color,String,#ff0000,,,,,
 AllowForPlayerShip,Allow For Player Ship,Boolean,false,,Shows system notify on player ship,,,
 ,,,,,,,,
 settign_header_3,Misc,Header,Clock,,,,,
 EnableClock,Enable Clock,Boolean,true,,Real time clock in compaign in left top corner under game date,,,
 12HourCLock,12 Hour Clock,Boolean,false,,12 hours AM/PM style clock,,,
 ,,,,,,,,
-settign_header_4,TransponderOff,,,,,,,TransponderOff
+settign_header_4,Order Drawer,Header,,,,,,
+orderDrawEnable,Enable Order Draw,Boolean,true,,Enable drawing of fleet orders in combat,,,
+orderSize,Order icon size,Double,1,,Change size of icons,0,20,
+,,,,,,,,
+settign_header_5,General,Header,General,,,,,Ship Direction Marker
+DisableMarkerOnPause,Disable marker while paused,Boolean,true,,Draw markers while game paused.,,,Ship Direction Marker
+PayerMarkerOnAtStartOfCombat,Draw on player,Boolean,true,,Enable marker on player ship (can still be toggled with a key),,,Ship Direction Marker
+TargetMarkerOnAtStartOfCombat,Draw on target,Boolean,true,,Enable marker on player's target (can still be toggled with a key),,,Ship Direction Marker
+DrawOnAll,Draw on all,Boolean,false,,Enable markers on all ships (can still be toggled with a key),,,Ship Direction Marker
+DrawOnAllFighters,Draw on fighters,Boolean,false,,Enable markers on markers on fighters (can still be toggled with a key)(beware performance impact) ,,,Ship Direction Marker
+,,,,,,,,
+settign_header_6,Keybinds,Header,Keybinds,,,,,Ship Direction Marker
+PlayerShipToggleButton,Toggle player,Keycode,26,,Button to toggle marker on player ship,,,Ship Direction Marker
+TargetShipToggleButton,Toggle target,Keycode,27,,Button to toggle marker on player's target,,,Ship Direction Marker
+DrawOnAllShipsToggleButton,Toggle all ships,Keycode,40,,Button to toggle markers on all other ships,,,Ship Direction Marker
+IncludeFightersInDrawOnAllToggle,Toggle fighters,Keycode,43,,Button to toggle markers on fighters (beware performance impact),,,Ship Direction Marker
+,,,,,,,,
+settign_header_7,Marker color,Header,Marker color,,,,,Ship Direction Marker
+customColors,Custom marker color,Boolean,false,,"Enabler custom colors for markers, if disabled uses UI color including from UI mods",,,Ship Direction Marker
+allyColor,Ally color,Color,#00ff00,,Color is in RGBA,,,Ship Direction Marker
+enemyColor,Enemy color,String,#ff0000,,Color is in RGBA,,,Ship Direction Marker
+,,,,,,,,
 BetterSensorBurst,Better Sensor Burst,Boolean,true,,Do not disable Sustained Burn when using Active Sensor Burst. Fleet will move slowly for the cool-down duration (instead of doing full stop),,,TransponderOff
 PartialSurveyAsYouFly,Partial Survey As You Fly,Boolean,true,,Automatically provide partial survey for planets within your sensor range.,,,TransponderOff
 ScavengeAsYouFly,Scavenge As You Fly,Boolean,true,,Use Scavenge ability as soon as it is usable. There is a new ability (with blue scavenge icon) that is used to turn this functionality on,,,TransponderOff
-Transpoffder,Scavenge As You Fly,Boolean,true,,Automatically turn off fleet transponder whenever transitioning to Hyperspace,,,TransponderOff
+Transpoffder,Transpoffder,Boolean,true,,Automatically turn off fleet transponder whenever transitioning to Hyperspace,,,TransponderOff
 ,,,,,,,,
 #luna_versionHeader,Version Checker,Header,Version Checker,,,,,
 #luna_enableVC,Enable Version Checker,Boolean,true,,"Enables Version Checker if set to true. Change is only applied when the game is [restarted]. 

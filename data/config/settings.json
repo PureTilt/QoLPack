@@ -1,5 +1,4 @@
 {
-	
 	"altMouseMoveToMassTransfer":true,
 	"enableShipExplosionWhiteout":false,
 	"shipRecoveryDialogShowBothListsAtOnce":true,
@@ -9,10 +8,15 @@
 		"qolp_AutoShieldAfterSystem":"data.plugins.qolp_AutoShieldAfterSystem",
 		"qolp_shieldSnapping":"data.plugins.qolp_shieldSnapping",
 		"qolp_systemNotify":"data.plugins.qolp_systemNotify",
+		"qolp_combatPlugin":"data.plugins.qolp_combatPlugin",
+		"qolp_shipDirection":"data.plugins.qolp_shipDirection",
 	},
 	"graphics":{
 		"icons":{
 			"qolp_shieldSnap":"graphics/icons/hullsys/qolp_shieldSnap.png",
+		},
+		"marker":{
+			"direction2":"graphics/icons/PT_dirmarker2.png",
 		},
 	},
 }

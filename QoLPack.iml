@@ -8,7 +8,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="starsector core" level="project" />
-    <orderEntry type="library" name="LazyLib" level="project" />
     <orderEntry type="library" name="LunaLib" level="project" />
+    <orderEntry type="library" name="LazyLib-Kotlin" level="project" />
   </component>
 </module>

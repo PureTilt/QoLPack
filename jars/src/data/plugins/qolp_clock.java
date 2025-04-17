@@ -22,14 +22,14 @@ public class qolp_clock implements EveryFrameScript {
     }
 
     private static LazyFont.DrawableString TODRAW14;
-    private static final float UIScaling = Math.min(1, Global.getSettings().getScreenScaleMult());
+    private static final float UIScaling = Math.max(1, Global.getSettings().getScreenScaleMult());
     float
             displayHeight = Display.getHeight(),
             triPadHeight,
             height,
             alpha = 1;
 
-    boolean USTime = false;
+    boolean USTime;
     
 
     static {
@@ -55,7 +55,6 @@ public class qolp_clock implements EveryFrameScript {
         return true;
     }
 
-
     @Override
     public void advance(float amount) {
         //It's to prevent double rendering due to fast forwarding
@@ -75,7 +74,7 @@ public class qolp_clock implements EveryFrameScript {
         triPadHeight = triPadArrow.getHeight();
 
         Color main = Misc.getTooltipTitleAndLightHighlightColor();
-        Color black = new Color(0,0,0, Math.round(255));
+        Color black = new Color(0,0,0,255);
 
         if (alpha < 1){
             alpha += amount * 3;
@@ -86,13 +85,12 @@ public class qolp_clock implements EveryFrameScript {
         triPadArrow.setAlphaMult(alpha);
 
 
-        Date currtime = new Date();
         Calendar data = Calendar.getInstance();
         int hours = data.get(Calendar.HOUR_OF_DAY);
         int minutes = data.get(Calendar.MINUTE);
         String inB = ":";
         if (minutes < 10) inB += "0";
-        String text = "";
+        String text;
         if (USTime){
             if (hours >= 12){
                 hours -= 12;
@@ -109,16 +107,16 @@ public class qolp_clock implements EveryFrameScript {
 
         openGL11ForText();
 
-        height = Math.round(displayHeight - (-triPadHeight * 2 - 15) * UIScaling);
+        height = Math.round(displayHeight - (-triPadHeight * 2 - (15 * UIScaling)));
 
         TODRAW14.setText(text);
         triPadArrow.render(0, height);
         float width = TODRAW14.getWidth();
         int TextPosX = Math.round(((USTime ? 53 : 35) * UIScaling) - width * 0.5f);
         int TextPosY =  Math.round(height + TODRAW14.getHeight() * 0.5f + triPadHeight  * 0.5f + 4 * UIScaling);
-        TODRAW14.setColor(black);
+        TODRAW14.setBaseColor(black);
         TODRAW14.draw(TextPosX + 2, TextPosY - 1);
-        TODRAW14.setColor(main);
+        TODRAW14.setBaseColor(main);
         TODRAW14.draw(TextPosX, TextPosY);
         //Global.getLogger(qolp_clock.class).info(main.getAlpha());
 
