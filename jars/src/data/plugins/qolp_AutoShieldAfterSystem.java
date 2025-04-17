@@ -43,7 +43,7 @@ public class qolp_AutoShieldAfterSystem implements EveryFrameCombatPlugin {
     public void advance(float amount, List<InputEventAPI> events) {
         if (engine == null || engine.getPlayerShip() == null) return;
         ShipAPI player = engine.getPlayerShip();
-        if (player.getSystem() == null || player.getShield() == null || player.getShield().getType().equals(ShieldAPI.ShieldType.PHASE) || player.getSystem().getSpecAPI().isShieldAllowed())
+        if (player.getSystem() == null || player.getShield() == null || player.getShield().getType().equals(ShieldAPI.ShieldType.PHASE))
             return;
 
         boolean systemCurrentlyActive = player.getSystem().isActive() || player.getSystem().isChargeup();

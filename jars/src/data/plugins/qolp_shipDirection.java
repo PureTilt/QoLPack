@@ -36,7 +36,6 @@ public class qolp_shipDirection extends BaseEveryFrameCombatPlugin {
     private CombatEngineAPI engine;
 
     private boolean
-            customColors = false,
             isON = true,
             enemyIsOn = true,
             reCalcForPlayer = false,
@@ -74,20 +73,12 @@ public class qolp_shipDirection extends BaseEveryFrameCombatPlugin {
             drawOnForFighters = getBoolean("DrawOnAllFighters");
             isON = getBoolean("PayerMarkerOnAtStartOfCombat");
             enemyIsOn = getBoolean("TargetMarkerOnAtStartOfCombat");
-            customColors = getBoolean("customColors");
+            if (getBoolean("customColors")) {
+                    allyColor = getColor("allyColor");
+                    enemyColor = getColor("enemyColor");
+            }
         } catch (IOException | JSONException e) {
             e.printStackTrace();
-        }
-
-
-        //float sizeMult = 1.5f;
-        if (customColors) {
-            try {
-                allyColor = getColor("allyColor");
-                enemyColor = getColor("enemyColor");
-            } catch (IOException | JSONException e) {
-                e.printStackTrace();
-            }
         }
 
         arrow = Global.getSettings().getSprite("marker", "direction2");

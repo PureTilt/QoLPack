@@ -13,7 +13,7 @@ public class qolp_combatPlugin extends BaseEveryFrameCombatPlugin {
     @Override
     public void init(CombatEngineAPI engine) {
         try {
-            if (qolp_getSettings.getBoolean("EnableClock")) {
+            if (qolp_getSettings.getBoolean("orderDrawEnable")) {
                 CombatLayeredRenderingPlugin layerRenderer = new qolp_drawFleetCommands();
                 engine.addLayeredRenderingPlugin(layerRenderer);
             }
