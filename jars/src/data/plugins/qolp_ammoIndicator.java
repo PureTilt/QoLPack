@@ -147,7 +147,7 @@ public class qolp_ammoIndicator extends BaseEveryFrameCombatPlugin {
             this.weapon = weapon;
             reloadTime = weapon.getAmmoTracker().getReloadSize() / weapon.getAmmoTracker().getAmmoPerSecond();
             amountOfMags = weapon.getMaxAmmo() / weapon.getAmmoTracker().getReloadSize();
-            drawStriae = amountOfMags <= 6 && reloadTime >= 1;
+            drawStriae = weapon.getAmmoTracker().getAmmoPerSecond() > 0 && amountOfMags <= 6 && reloadTime >= 1;
             striaeAmount = (int) Math.ceil(amountOfMags) - 1;
         }
 
