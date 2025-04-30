@@ -3,14 +3,22 @@ package data.plugins;
 import java.awt.Color;
 
 import com.fs.starfarer.api.Global;
+import com.fs.starfarer.api.campaign.CampaignFleetAPI;
+import com.fs.starfarer.api.campaign.SectorEntityToken;
+import com.fs.starfarer.api.campaign.ai.ModularFleetAIAPI;
 import com.fs.starfarer.api.characters.AbilityPlugin;
 import com.fs.starfarer.api.impl.campaign.abilities.BaseToggleAbility;
 import com.fs.starfarer.api.impl.campaign.ids.Abilities;
+import com.fs.starfarer.api.impl.campaign.rulecmd.salvage.HostileFleetNearbyAndAware;
 import com.fs.starfarer.api.ui.LabelAPI;
 import com.fs.starfarer.api.ui.TooltipMakerAPI;
+import com.fs.starfarer.api.util.IntervalUtil;
 import com.fs.starfarer.api.util.Misc;
 
 public class qolp_AutoScavengeAbility extends BaseToggleAbility {
+
+    float maxTime = 2;
+    float timer = maxTime;
 
     public static boolean isOn() {
         if (getInstance() != null) return getInstance().isActive();
@@ -34,6 +42,7 @@ public class qolp_AutoScavengeAbility extends BaseToggleAbility {
         if (amount == 0) {
             return;
         }
+        timer += amount;
         if (!turnedOn) {
             return;
         }
@@ -41,8 +50,12 @@ public class qolp_AutoScavengeAbility extends BaseToggleAbility {
         if (scavenge == null) {
             return;
         }
-        if (scavenge.isUsable()) {
-            scavenge.activate();
+        if (timer >= maxTime && scavenge.isUsable()) {
+            if (hostileCHeck()){
+                timer = 0;
+            } else {
+                scavenge.activate();
+            }
         }
     }
 
@@ -93,5 +106,51 @@ public class qolp_AutoScavengeAbility extends BaseToggleAbility {
             return " (on)";
         }
         return " (off)";
+    }
+
+    public boolean hostileCHeck() {
+
+        //float range = params.get(0).getFloat(memoryMap);
+
+        CampaignFleetAPI playerFleet = Global.getSector().getPlayerFleet();
+        for (CampaignFleetAPI fleet : playerFleet.getContainingLocation().getFleets()) {
+            if (fleet.getAI() == null) continue; // dormant Remnant fleets
+            if (fleet.getFaction().isPlayerFaction()) continue;
+            if (fleet.isStationMode()) continue;
+
+            if (!fleet.isHostileTo(playerFleet)) continue;
+            if (fleet.getBattle() != null) continue;
+
+            if (Misc.isInsignificant(fleet)) {
+                continue;
+            }
+
+
+            SectorEntityToken.VisibilityLevel level = playerFleet.getVisibilityLevelTo(fleet);
+//			MemoryAPI mem = fleet.getMemoryWithoutUpdate();
+//			if (!mem.contains(MemFlags.MEMORY_KEY_SAW_PLAYER_WITH_TRANSPONDER_OFF) &&
+//					!mem.contains(MemFlags.MEMORY_KEY_PURSUE_PLAYER)) {
+//				if (level == VisibilityLevel.NONE) continue;
+//			}
+            if (level == SectorEntityToken.VisibilityLevel.NONE) continue;
+
+            if (fleet.getFleetData().getMembersListCopy().isEmpty()) continue;
+
+            float dist = Misc.getDistance(playerFleet.getLocation(), fleet.getLocation());
+            if (dist > 1500f) continue;
+
+            //fleet.getAI().pickEncounterOption(null, playerFleet, true);
+            if (fleet.getAI() instanceof ModularFleetAIAPI ai) {
+                if (ai.getTacticalModule() != null &&
+                        (ai.getTacticalModule().isFleeing() || ai.getTacticalModule().isMaintainingContact() ||
+                                ai.getTacticalModule().isStandingDown())) {
+                    continue;
+                }
+            }
+
+            return true;
+        }
+
+        return false;
     }
 }

@@ -1,0 +1,11 @@
+Version 1.4
+AutoScavenge no longer attempts to scavenge if hostile fleet nearby
+Remote Survey no longer disables sustain burn
+Ready fire indicators draw indicators of ammo and weapon cooldowns near weapons with long cooldowns or ammo
+
+Version 1.3
+If you used before pls go to "saves\common\LunaSettings" and delete "pt_qolpack.json.data" to prevent crashes
+Added order drawer: Draws fleet orders placed on battlefield in normal view 
+Autoshield after system how should work with phase skimmer 
+Assimilated ship direction marker
+Buch of miscellaneous fixes

@@ -42,6 +42,10 @@ public class qolp_modPlugin extends BaseModPlugin {
             Global.getSettings().getAbilitySpec("sensor_burst").getTags().remove("burn-");
             Global.getSettings().getAbilitySpec("sensor_burst").getTags().remove("sensors+");
         }
+        if (qolp_getSettings.getBoolean("BetterRemoteSurvey")) {
+            Global.getSettings().getAbilitySpec("remote_survey").getTags().remove("burn-");
+            Global.getSettings().getAbilitySpec("remote_survey").getTags().remove("sensors+");
+        }
     }
 
     @Override
