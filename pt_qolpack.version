@@ -1,5 +1,6 @@
 {
     "masterVersionFile":"https://raw.githubusercontent.com/PureTilt/QoLPack/refs/heads/master/pt_qolpack.version",
+    "changelogURL":"https://raw.githubusercontent.com/PureTilt/QoLPack/refs/heads/master/changelog.txt",
     "modName":"QoLPack",
     "modThreadId":23652,
     "modVersion":

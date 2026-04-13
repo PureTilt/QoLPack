@@ -3,9 +3,7 @@ package data.plugins;
 import com.fs.starfarer.api.combat.*;
 import com.fs.starfarer.api.input.InputEventAPI;
 import data.utils.qolp_getSettings;
-import org.json.JSONException;
 
-import java.io.IOException;
 import java.util.List;
 
 public class qolp_AutoShieldAfterSystem implements EveryFrameCombatPlugin {
@@ -24,11 +22,7 @@ public class qolp_AutoShieldAfterSystem implements EveryFrameCombatPlugin {
     public void init(CombatEngineAPI engine) {
         this.engine = engine;
         boolean enable = true;
-        try {
-            enable = qolp_getSettings.getBoolean("EnableAutoShieldOnAfterSystem");
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
+        enable = qolp_getSettings.getBoolean("EnableAutoShieldOnAfterSystem");
         if (!enable) {
             engine.removePlugin(this);
         }

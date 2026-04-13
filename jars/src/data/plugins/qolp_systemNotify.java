@@ -37,17 +37,13 @@ public class qolp_systemNotify extends BaseEveryFrameCombatPlugin {
         this.engine = engine;
         Color temp;
         boolean enable = true;
-        try {
             textSize = getInt("TextSize");
             enable = getBoolean("EnableSystemNotify");
             allowPlayer = getBoolean("AllowForPlayerShip");
-            temp = getColor("OnTextColor");
+            temp = getColor("OnTextColorNew");
             if (getBoolean("systemNotifcustomColors")) positiveTextColor = temp;
-            temp = getColor("OffTextColor");
+            temp = getColor("OffTextColorNew");
             if (getBoolean("systemNotifcustomColors")) negativeTextColor = temp;
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
         if (!enable) {
             engine.removePlugin(this);
         }

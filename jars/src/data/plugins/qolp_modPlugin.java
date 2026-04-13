@@ -13,23 +13,15 @@ public class qolp_modPlugin extends BaseModPlugin {
 
     @Override
     public void afterGameSave() {
-        try {
-            if (qolp_getSettings.getBoolean("ScavengeAsYouFly")) {
-                restoreAutoScavenge();
-            }
-        } catch (JSONException | IOException e) {
-            e.printStackTrace();
+        if (qolp_getSettings.getBoolean("ScavengeAsYouFly")) {
+            restoreAutoScavenge();
         }
     }
 
     @Override
     public void beforeGameSave() {
-        try {
-            if (qolp_getSettings.getBoolean("ScavengeAsYouFly")) {
-                removeAutoScavenge();
-            }
-        } catch (JSONException | IOException e) {
-            e.printStackTrace();
+        if (qolp_getSettings.getBoolean("ScavengeAsYouFly")) {
+            removeAutoScavenge();
         }
     }
 
@@ -50,22 +42,18 @@ public class qolp_modPlugin extends BaseModPlugin {
 
     @Override
     public void onGameLoad(boolean newGame) {
-        try {
-            if (qolp_getSettings.getBoolean("EnableClock")) {
-                addTransientScript(new qolp_clock(qolp_getSettings.getBoolean("12HourCLock")));
-            }
-            if (qolp_getSettings.getBoolean("PartialSurveyAsYouFly")) {
-                addTransientScript(new qolp_PartialSurveyScript());
-            }
-            if (qolp_getSettings.getBoolean("ScavengeAsYouFly")) {
-                restoreAutoScavenge();
-                notifyAboutState();
-            }
-            if (qolp_getSettings.getBoolean("Transpoffder")) {
-                addTransientListener(new qolp_TranspoffderListener());
-            }
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
+        if (qolp_getSettings.getBoolean("EnableClock")) {
+            addTransientScript(new qolp_clock(qolp_getSettings.getBoolean("12HourCLock")));
+        }
+        if (qolp_getSettings.getBoolean("PartialSurveyAsYouFly")) {
+            addTransientScript(new qolp_PartialSurveyScript());
+        }
+        if (qolp_getSettings.getBoolean("ScavengeAsYouFly")) {
+            restoreAutoScavenge();
+            notifyAboutState();
+        }
+        if (qolp_getSettings.getBoolean("Transpoffder")) {
+            addTransientListener(new qolp_TranspoffderListener());
         }
 
     }

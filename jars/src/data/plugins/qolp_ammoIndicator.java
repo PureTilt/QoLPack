@@ -33,7 +33,6 @@ public class qolp_ammoIndicator extends BaseEveryFrameCombatPlugin {
         float scale = 1;
         float scaleX = 1;
         float scaleY = 1;
-        try {
             if (!getBoolean("rfi_enable")) engine.removePlugin(this);
             onlyPhase = getBoolean("rfi_onlyPhase");
             ignorePD = getBoolean("rfi_ignorePD");
@@ -45,9 +44,6 @@ public class qolp_ammoIndicator extends BaseEveryFrameCombatPlugin {
             scale = getFloat("rfi_scale");
             scaleX = getFloat("rfi_scaleX");
             scaleY = getFloat("rfi_scaleY");
-        } catch (JSONException | IOException e) {
-            e.printStackTrace();
-        }
 
         border = Global.getSettings().getSprite("ui", "qolp_ammoUIborder");
         border.setColor(positive.darker());

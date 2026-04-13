@@ -5,7 +5,6 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.campaign.CoreUITabId;
 import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.util.Misc;
-import com.fs.util.DoNotObfuscate;
 import org.lazywizard.lazylib.ui.FontException;
 import org.lazywizard.lazylib.ui.LazyFont;
 import org.lwjgl.opengl.Display;
@@ -13,11 +12,10 @@ import org.lwjgl.opengl.GL11;
 
 import java.awt.*;
 import java.util.Calendar;
-import java.util.Date;
 
 public class qolp_clock implements EveryFrameScript {
 
-    qolp_clock (boolean USTime){
+    qolp_clock(boolean USTime) {
         this.USTime = USTime;
     }
 
@@ -30,7 +28,7 @@ public class qolp_clock implements EveryFrameScript {
             alpha = 1;
 
     boolean USTime;
-    
+
 
     static {
         try {
@@ -74,11 +72,11 @@ public class qolp_clock implements EveryFrameScript {
         triPadHeight = triPadArrow.getHeight();
 
         Color main = Misc.getTooltipTitleAndLightHighlightColor();
-        Color black = new Color(0,0,0,255);
+        Color black = new Color(0, 0, 0, 255);
 
-        if (alpha < 1){
+        if (alpha < 1) {
             alpha += amount * 3;
-            if (alpha > 1){
+            if (alpha > 1) {
                 alpha = 1;
             }
         }
@@ -91,8 +89,8 @@ public class qolp_clock implements EveryFrameScript {
         String inB = ":";
         if (minutes < 10) inB += "0";
         String text;
-        if (USTime){
-            if (hours >= 12){
+        if (USTime) {
+            if (hours >= 12) {
                 hours -= 12;
                 text = hours + inB + minutes + " PM";
             } else {
@@ -113,7 +111,7 @@ public class qolp_clock implements EveryFrameScript {
         triPadArrow.render(0, height);
         float width = TODRAW14.getWidth();
         int TextPosX = Math.round(((USTime ? 53 : 35) * UIScaling) - width * 0.5f);
-        int TextPosY =  Math.round(height + TODRAW14.getHeight() * 0.5f + triPadHeight  * 0.5f + 4 * UIScaling);
+        int TextPosY = Math.round(height + TODRAW14.getHeight() * 0.5f + triPadHeight * 0.5f + 4 * UIScaling);
         TODRAW14.setBaseColor(black);
         TODRAW14.draw(TextPosX + 2, TextPosY - 1);
         TODRAW14.setBaseColor(main);
@@ -147,7 +145,7 @@ public class qolp_clock implements EveryFrameScript {
         GL11.glPopAttrib();
     }
 
-    private Color changeAlpha (Color color, float alpha){
-        return new Color(color.getRed(),color.getGreen(),color.getBlue(), Math.min(255, Math.max(0, Math.round(alpha))));
+    private Color changeAlpha(Color color, float alpha) {
+        return new Color(color.getRed(), color.getGreen(), color.getBlue(), Math.min(255, Math.max(0, Math.round(alpha))));
     }
 }

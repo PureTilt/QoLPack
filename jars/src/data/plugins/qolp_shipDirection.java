@@ -8,20 +8,17 @@ import com.fs.starfarer.api.combat.ShipAPI;
 import com.fs.starfarer.api.graphics.SpriteAPI;
 import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.util.Misc;
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 import org.lazywizard.lazylib.MathUtils;
 import org.lazywizard.lazylib.VectorUtils;
 import org.lazywizard.lazylib.combat.CombatUtils;
 import org.lwjgl.util.vector.Vector2f;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.List;
 
 import static data.utils.qolp_getSettings.*;
-import static org.lwjgl.opengl.GL11.*;
+import static org.lwjgl.opengl.GL11.glOrtho;
+import static org.lwjgl.opengl.GL11.glPopMatrix;
 
 public class qolp_shipDirection extends BaseEveryFrameCombatPlugin {
 
@@ -63,22 +60,18 @@ public class qolp_shipDirection extends BaseEveryFrameCombatPlugin {
     @Override
     public void init(CombatEngineAPI engine) {
         this.engine = engine;
-        try {
-            shipToggleKey = getInt("PlayerShipToggleButton");
-            targetToggleKey = getInt("TargetShipToggleButton");
-            allToggleKey = getInt("DrawOnAllShipsToggleButton");
-            fightersToggleKey = getInt("IncludeFightersInDrawOnAllToggle");
-            disableOnPause = getBoolean("DisableMarkerOnPause");
-            drawOnAll = getBoolean("DrawOnAll");
-            drawOnForFighters = getBoolean("DrawOnAllFighters");
-            isON = getBoolean("PayerMarkerOnAtStartOfCombat");
-            enemyIsOn = getBoolean("TargetMarkerOnAtStartOfCombat");
-            if (getBoolean("customColors")) {
-                    allyColor = getColor("allyColor");
-                    enemyColor = getColor("enemyColor");
-            }
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
+        shipToggleKey = getInt("PlayerShipToggleButton");
+        targetToggleKey = getInt("TargetShipToggleButton");
+        allToggleKey = getInt("DrawOnAllShipsToggleButton");
+        fightersToggleKey = getInt("IncludeFightersInDrawOnAllToggle");
+        disableOnPause = getBoolean("DisableMarkerOnPause");
+        drawOnAll = getBoolean("DrawOnAll");
+        drawOnForFighters = getBoolean("DrawOnAllFighters");
+        isON = getBoolean("PayerMarkerOnAtStartOfCombat");
+        enemyIsOn = getBoolean("TargetMarkerOnAtStartOfCombat");
+        if (getBoolean("customColors")) {
+            allyColor = getColor("allyColor");
+            enemyColor = getColor("enemyColor");
         }
 
         arrow = Global.getSettings().getSprite("marker", "direction2");
@@ -106,15 +99,19 @@ public class qolp_shipDirection extends BaseEveryFrameCombatPlugin {
 
             if (e.isKeyDownEvent() && e.getEventValue() == shipToggleKey) {
                 isON = !isON;
+                engine.addFloatingTextAlways(playerShip.getLocation(), "SDM: " + isON, 40, Color.white, playerShip, 0, 0, 1f, 0.2f, 0.3f, 1);
             }
             if (e.isKeyDownEvent() && e.getEventValue() == targetToggleKey) {
                 enemyIsOn = !enemyIsOn;
+                engine.addFloatingTextAlways(playerShip.getLocation(), "SDM enemy: " + enemyIsOn, 40, Color.white, playerShip, 0, 0, 1f, 0.2f, 0.3f, 1);
             }
             if (e.isKeyDownEvent() && e.getEventValue() == allToggleKey) {
                 drawOnAll = !drawOnAll;
+                engine.addFloatingTextAlways(playerShip.getLocation(), "SDM All : " + drawOnAll, 40, Color.white, playerShip, 0, 0, 1f, 0.2f, 0.3f, 1);
             }
             if (e.isKeyDownEvent() && e.getEventValue() == fightersToggleKey) {
                 drawOnForFighters = !drawOnForFighters;
+                engine.addFloatingTextAlways(playerShip.getLocation(), "SDM fighters : " + drawOnForFighters, 40, Color.white, playerShip, 0, 0, 1f, 0.2f, 0.3f, 1);
             }
         }
     }
@@ -134,8 +131,8 @@ public class qolp_shipDirection extends BaseEveryFrameCombatPlugin {
         if (phaseAngle > 360) phaseAngle -= 360;
         phaseAngle += amount * 5f;
 
-        glPushMatrix();
-        glLoadIdentity();
+        //glPushMatrix();
+        //glLoadIdentity();
         glOrtho(0, Global.getSettings().getScreenWidth(), 0, Global.getSettings().getScreenHeight(), -1, 1);
 
         //check if player ship same as in last frame
@@ -233,10 +230,11 @@ public class qolp_shipDirection extends BaseEveryFrameCombatPlugin {
         if (drawOnAll) {
             for (ShipAPI ship : engine.getShips()) {
                 if (!engine.isEntityInPlay(ship)) continue;
-                if (isON && ship == playerShip) continue;
+                if (ship == playerShip) continue;
                 if (!screenCheck(0.5f, ship.getLocation())) continue;
                 if (!ship.isAlive()) continue;
                 if (ship.isHulk()) continue;
+                if (ship.isStationModule()) continue;
                 if (ship.getHullSize() == ShipAPI.HullSize.FIGHTER && !drawOnForFighters) continue;
                 if (VectorUtils.isZeroVector(ship.getVelocity())) continue;
 
@@ -274,11 +272,11 @@ public class qolp_shipDirection extends BaseEveryFrameCombatPlugin {
                 arrowTarget.renderAtCenter(whereToDraw.x, whereToDraw.y);
             }
         }
-
+/*
         glEnd();
         glDisable(GL_BLEND);
         glPopAttrib();
-        glColor4f(1, 1, 1, 1);
+        glColor4f(1, 1, 1, 1);*/
         glPopMatrix();
     }
 

@@ -4,14 +4,11 @@ import com.fs.starfarer.api.Global;
 import com.fs.starfarer.api.combat.*;
 import com.fs.starfarer.api.combat.CombatFleetManagerAPI.AssignmentInfo;
 import com.fs.starfarer.api.graphics.SpriteAPI;
-import org.json.JSONException;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.EnumSet;
 import java.util.List;
 
-import static data.utils.qolp_getSettings.getBoolean;
 import static data.utils.qolp_getSettings.getFloat;
 
 public class qolp_drawFleetCommands extends BaseCombatLayeredRenderingPlugin {
@@ -29,11 +26,7 @@ public class qolp_drawFleetCommands extends BaseCombatLayeredRenderingPlugin {
 
     {
         float sizeMulti = 1;
-        try {
-            sizeMulti = getFloat("orderSize");
-        } catch (JSONException | IOException e) {
-            throw new RuntimeException(e);
-        }
+        sizeMulti = getFloat("orderSize");
         defend.setSize(defend.getWidth() * sizeMulti, defend.getHeight() * sizeMulti);
         avoid.setSize(avoid.getWidth() * sizeMulti, avoid.getHeight() * sizeMulti);
         rally.setSize(rally.getWidth() * sizeMulti, rally.getHeight() * sizeMulti);

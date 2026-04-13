@@ -1,16 +1,30 @@
 fieldID,fieldName,fieldType,defaultValue,secondaryValue,fieldDescription,minValue,maxValue,tab
-EnableAutoShieldOnAfterSystem,Deploy shield after system,Boolean,true,,"If system folds shield deploy it after system ends if it was deployed when you activated the system
+EnableAutoShieldOnAfterSystem,Deploy shield after system,Boolean,false,,"If system folds shield deploy it after system ends if it was deployed when you activated the system
 
-(Side Note: if you manually deactivate shield in exact moment you activate ship system this will deploy shields after system ends)",,,
+(Side Note: if you manually deactivate shield in exact moment you activate ship system this will deploy shields after system ends)
+(not recomended to use quite unstable doesn't work on some modded systems, some effects like time flow increases might also break it)",,,
 EnableAutoShieldOnAfterOverload,Deploy shield after overload,Boolean,true,,Press RMB while overloaded/venting to deploy shield/activate phase cloak right after overload/venting ends,,,
 ,,,,,,,,
-settign_header_1,Deploy shield after overload,Header,Shield snapping,,"Settings for shield auto targetting, controls shield for you",0,4,
+settign_header_1,,Header,Shield assist,,"Settings for shield auto targetting, controls shield for you",0,4,
 DefaultShieldSnapMode,Default Shield Snap Mode,Int,1,,"0 - No snapping
 1 - Snaps to ship's target follow mouse if no target
 2 - Snaps to current target and stay snap to it even if target changes
 3 - Snaps to current position relative to the ship
 4 - Snaps to current position relative to the world",0,4,
 SaveModeBetweenEncounters,Save Mode Between Encounters,Boolean,false,,Saves selected mode between combat encounters,,,
+ShieldSnappingMenuKey,Radial Menu key,Keycode,59,,,,,
+ShieldSnappingMenuTextRender,Enable Mode Labels,Boolean,true,,Show text labels for modes on radial menu,,,
+ShieldSnappingMenuInnerR,Radius Of Central Circle,Int,25,,,5,50,
+ShieldSnappingMenuRingThinknes,Ring Thickness,Int,125,,,10,250,
+ShieldSnappingMenuTheme,Radial menu color scheme,Int,1,,"1 - Use player faction colors
+2 - Copy player's shield colors
+3 - Use combat UI colors
+",1,3,
+ShieldSnappingSlowDown,Menu Slow-mo,Int,95,,"Percentage value by which game slows down then menu is active
+100 pauses the game 0 removes slowdown",0,100,
+ShieldSnappingResetMouse,Reset Mouse,Boolean,false,,When menu deactivated puts mouse in position it was when menu was activated,,,
+settign_header_LegacyShieldSnapping,,Header,Legacy Shield snapping,,,,,
+EnableLegacyShieldSnapping,Enable legacy mode,Boolean,false,,Use keybind for each individual mode instead of radial menu,,,
 snapIfTarget,Snap If Target,Keycode,59,,Snaps to ship's target follow mouse if no target,,,
 rememberTarget,Remember Target,Keycode,60,,Snaps to current target and stay snap to it even if target changes,,,
 shipSide,Ship Side,Keycode,61,,Snaps to current position relative to the ship,,,
@@ -20,12 +34,12 @@ settign_header_2,System Notify settings,Header,System Notify settings,,,,,
 EnableSystemNotify,Enable System Notify,Boolean,true,,,,,
 TextSize,Text Size,Int,30,,,,,
 systemNotifcustomColors,Custom Text color,Boolean,false,,"Enable custom color for text, if disabled uses UI color including from UI mods",,,
-OnTextColor,On Text Color,Color,#00ff00,,,,,
-OffTextColor,Off Text Color,Color,#ff0000,,,,,
+OnTextColorNew,On Text Color,Color,#00ff00,,,,,
+OffTextColorNew,Off Text Color,Color,#ff0000,,,,,
 AllowForPlayerShip,Allow For Player Ship,Boolean,false,,Shows system notify on player ship,,,
 ,,,,,,,,
 settign_header_3,Misc,Header,Clock,,,,,
-EnableClock,Enable Clock,Boolean,true,,Real time clock in compaign in left top corner under game date,,,
+EnableClock,Enable Clock,Boolean,true,,Real time clock in campaign in left top corner under game date,,,
 12HourCLock,12 Hour Clock,Boolean,false,,12 hours AM/PM style clock,,,
 ,,,,,,,,
 settign_header_4,Order Drawer,Header,Order Drawer,,,,,
@@ -56,7 +70,7 @@ PartialSurveyAsYouFly,Partial Survey As You Fly,Boolean,true,,Automatically prov
 ScavengeAsYouFly,Scavenge As You Fly,Boolean,true,,Use Scavenge ability as soon as it is usable. There is a new ability (with blue scavenge icon) that is used to turn this functionality on,,,TransponderOff
 Transpoffder,Transpoffder,Boolean,true,,Automatically turn off fleet transponder whenever transitioning to Hyperspace,,,TransponderOff
 ,,,,,,,,
-settign_header_ammoDraw,Ready Fire Indicator,Header,Ready Fire Indicator,,,,,Combat Information
+settign_header_ammoDraw,Ready Fire Indicator,Header,Weapon Ammo Indicator,,,,,Combat Information
 rfi_header_text,Draws cooldown or ammo near weapon,text,Draws cooldown or ammo near weapon,,,,,Combat Information
 rfi_enable,Enable,Boolean,true,,,,,Combat Information
 rfi_onlyPhase,Only draw for phase ships,Boolean,false,,,,,Combat Information
@@ -64,7 +78,7 @@ rfi_drawonActive,Draw on selected weapons,Boolean,false,,,,,Combat Information
 rfi_ignorePD,Don't draw on PD weapons,Boolean,true,,,,,Combat Information
 rfi_ignoreSMALL,Don't draw on small weapons,Boolean,false,,,,,Combat Information
 rfi_minCD,Minimal refire delay to draw,Double,3,,Coutns without burst duration,,,Combat Information
-rfi_minReload,Minimal total relaod tiem to draw,Double,3,,,,,Combat Information
+rfi_minReload,Minimal total reload time to draw,Double,3,,,,,Combat Information
 rfi_offset,Bar offset,Double,5,,,-20,20,Combat Information
 rfi_scale,Size scale,Double,1,,,0,5,Combat Information
 rfi_scaleX,Width scale,Double,1,,,0,5,Combat Information

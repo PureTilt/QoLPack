@@ -3,9 +3,7 @@ package data.plugins;
 import com.fs.starfarer.api.combat.*;
 import com.fs.starfarer.api.input.InputEventAPI;
 import data.utils.qolp_getSettings;
-import org.json.JSONException;
 
-import java.io.IOException;
 import java.util.List;
 
 public class qolp_RMCAfterOverload extends BaseEveryFrameCombatPlugin {
@@ -19,11 +17,7 @@ public class qolp_RMCAfterOverload extends BaseEveryFrameCombatPlugin {
     public void init(CombatEngineAPI engine) {
         this.engine = engine;
         boolean enable = true;
-        try {
-            enable = qolp_getSettings.getBoolean("EnableAutoShieldOnAfterOverload");
-        } catch (IOException | JSONException e) {
-            e.printStackTrace();
-        }
+        enable = qolp_getSettings.getBoolean("EnableAutoShieldOnAfterOverload");
         if (!enable) {
             engine.removePlugin(this);
         }
