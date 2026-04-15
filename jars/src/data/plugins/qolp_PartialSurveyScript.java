@@ -9,6 +9,7 @@ import com.fs.starfarer.api.campaign.StarSystemAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI;
 import com.fs.starfarer.api.campaign.econ.MarketAPI.SurveyLevel;
 import com.fs.starfarer.api.util.Misc;
+import org.lazywizard.lazylib.MathUtils;
 
 public class qolp_PartialSurveyScript implements EveryFrameScript {
 
@@ -43,7 +44,7 @@ public class qolp_PartialSurveyScript implements EveryFrameScript {
     }
 
     private boolean isInRange(CampaignFleetAPI fleet, SectorEntityToken token) {
-        return Misc.getDistance(fleet, token) < fleet.getSensorStrength();
+        return MathUtils.isWithinRange(fleet.getLocation(), token.getLocation(),fleet.getSensorStrength());
     }
 
     private void process(CampaignFleetAPI fleet, PlanetAPI planet) {

@@ -7,11 +7,8 @@ import com.fs.starfarer.api.combat.CombatEngineAPI;
 import com.fs.starfarer.api.combat.ShipAPI;
 import com.fs.starfarer.api.input.InputEventAPI;
 import com.fs.starfarer.api.util.Misc;
-import data.utils.qolp_getSettings;
-import org.json.JSONException;
 
 import java.awt.*;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -37,13 +34,13 @@ public class qolp_systemNotify extends BaseEveryFrameCombatPlugin {
         this.engine = engine;
         Color temp;
         boolean enable = true;
-            textSize = getInt("TextSize");
-            enable = getBoolean("EnableSystemNotify");
-            allowPlayer = getBoolean("AllowForPlayerShip");
-            temp = getColor("OnTextColorNew");
-            if (getBoolean("systemNotifcustomColors")) positiveTextColor = temp;
-            temp = getColor("OffTextColorNew");
-            if (getBoolean("systemNotifcustomColors")) negativeTextColor = temp;
+        textSize = getInt("TextSize");
+        enable = getBoolean("EnableSystemNotify");
+        allowPlayer = getBoolean("AllowForPlayerShip");
+        temp = getColor("OnTextColorNew");
+        if (getBoolean("systemNotifcustomColors")) positiveTextColor = temp;
+        temp = getColor("OffTextColorNew");
+        if (getBoolean("systemNotifcustomColors")) negativeTextColor = temp;
         if (!enable) {
             engine.removePlugin(this);
         }
