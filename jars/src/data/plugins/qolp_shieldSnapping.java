@@ -147,6 +147,7 @@ public class qolp_shieldSnapping extends BaseEveryFrameCombatPlugin {
     @Override
     public void processInputPreCoreControls(float amount, List<InputEventAPI> events) {
         if (engine == null || engine.getPlayerShip() == null) return;
+        if (Global.getCurrentState() == GameState.TITLE) return;
         for (InputEventAPI e : events) {
             if (e.isConsumed()) continue;
             if (legacyMode) {
@@ -408,7 +409,6 @@ public class qolp_shieldSnapping extends BaseEveryFrameCombatPlugin {
             skippedFrames += amount;
             return;
         }
-        if (Global.getCurrentState() == GameState.TITLE) engine.removePlugin(this);
         if (engine == null || engine.getPlayerShip() == null) return;
         ShipAPI player = engine.getPlayerShip();
         if (shieldSelectorActive) {

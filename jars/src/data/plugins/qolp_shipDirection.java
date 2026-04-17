@@ -17,8 +17,7 @@ import java.awt.*;
 import java.util.List;
 
 import static data.utils.qolp_getSettings.*;
-import static org.lwjgl.opengl.GL11.glOrtho;
-import static org.lwjgl.opengl.GL11.glPopMatrix;
+import static org.lwjgl.opengl.GL11.*;
 
 public class qolp_shipDirection extends BaseEveryFrameCombatPlugin {
 
@@ -131,8 +130,10 @@ public class qolp_shipDirection extends BaseEveryFrameCombatPlugin {
         if (phaseAngle > 360) phaseAngle -= 360;
         phaseAngle += amount * 5f;
 
-        //glPushMatrix();
-        //glLoadIdentity();
+        glPushMatrix();
+        glLoadIdentity();
+        glEnable(GL_TEXTURE_2D);
+        glColor4f(1, 1, 1, 1);
         glOrtho(0, Global.getSettings().getScreenWidth(), 0, Global.getSettings().getScreenHeight(), -1, 1);
 
         //check if player ship same as in last frame
@@ -275,8 +276,8 @@ public class qolp_shipDirection extends BaseEveryFrameCombatPlugin {
 /*
         glEnd();
         glDisable(GL_BLEND);
-        glPopAttrib();
         glColor4f(1, 1, 1, 1);*/
+        glPopAttrib();
         glPopMatrix();
     }
 
