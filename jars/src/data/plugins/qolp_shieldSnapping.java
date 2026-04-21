@@ -173,26 +173,26 @@ public class qolp_shieldSnapping extends BaseEveryFrameCombatPlugin {
                         shieldSelectorActive = true;
                         mousePos = new Vector2f(Global.getSettings().getMouseX(), Global.getSettings().getMouseY());
 
-                    } else if (e.isKeyUpEvent()) {
-                        shieldSelectorActive = false;
-                        Vector2f newMousePos = new Vector2f(Global.getSettings().getMouseX(), Global.getSettings().getMouseY());
-                        if (MathUtils.isWithinRange(mousePos, newMousePos, innerR)) {
-                            mode = shieldMods.none;
-                        } else {
-                            if (newMousePos.x > mousePos.x) {
-                                if (newMousePos.y > mousePos.y) {
-                                    mode = shieldMods.rememberTarget;
-                                } else {
-                                    mode = shieldMods.shipSide;
-                                }
+                    } else if (shieldSelectorActive && e.isKeyUpEvent()) {
+                            shieldSelectorActive = false;
+                            Vector2f newMousePos = new Vector2f(Global.getSettings().getMouseX(), Global.getSettings().getMouseY());
+                            if (MathUtils.isWithinRange(mousePos, newMousePos, innerR)) {
+                                mode = shieldMods.none;
                             } else {
-                                if (newMousePos.y > mousePos.y) {
-                                    mode = shieldMods.snapIfTarget;
+                                if (newMousePos.x > mousePos.x) {
+                                    if (newMousePos.y > mousePos.y) {
+                                        mode = shieldMods.rememberTarget;
+                                    } else {
+                                        mode = shieldMods.shipSide;
+                                    }
                                 } else {
-                                    mode = shieldMods.direction;
+                                    if (newMousePos.y > mousePos.y) {
+                                        mode = shieldMods.snapIfTarget;
+                                    } else {
+                                        mode = shieldMods.direction;
+                                    }
                                 }
                             }
-                        }
 
                     }
                 }

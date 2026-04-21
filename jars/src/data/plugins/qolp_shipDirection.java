@@ -91,7 +91,7 @@ public class qolp_shipDirection extends BaseEveryFrameCombatPlugin {
 
     @Override
     public void processInputPreCoreControls(float amount, List<InputEventAPI> events) {
-        if (engine == null) return;
+        if (engine == null || playerShip == null) return;
 
         for (InputEventAPI e : events) {
             if (e.isConsumed()) continue;
