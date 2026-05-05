@@ -114,7 +114,7 @@ public class qolp_shipDirection extends BaseEveryFrameCombatPlugin {
                 drawOnForFighters = !drawOnForFighters;
                 text = "SDM fighters : " + drawOnForFighters;
             }
-            if (playerShip.getLocation() != null) engine.addFloatingTextAlways(playerShip.getLocation(), text, 40, Color.white, playerShip, 0, 0, 1f, 0.2f, 0.3f, 1);
+            if (playerShip != null && playerShip.getLocation() != null) engine.addFloatingTextAlways(playerShip.getLocation(), text, 40, Color.white, playerShip, 0, 0, 1f, 0.2f, 0.3f, 1);
 
         }
     }

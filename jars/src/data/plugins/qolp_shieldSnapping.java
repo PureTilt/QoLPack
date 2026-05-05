@@ -146,7 +146,7 @@ public class qolp_shieldSnapping extends BaseEveryFrameCombatPlugin {
 
     @Override
     public void processInputPreCoreControls(float amount, List<InputEventAPI> events) {
-        if (engine == null || engine.getPlayerShip() == null) return;
+        if (engine == null || engine.getPlayerShip() == null || engine.getPlayerShip().getShield() == null) return;
         if (Global.getCurrentState() == GameState.TITLE) return;
         for (InputEventAPI e : events) {
             if (e.isConsumed()) continue;
