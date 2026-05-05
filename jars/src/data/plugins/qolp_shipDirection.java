@@ -95,23 +95,27 @@ public class qolp_shipDirection extends BaseEveryFrameCombatPlugin {
 
         for (InputEventAPI e : events) {
             if (e.isConsumed()) continue;
+            String text = "";
 
             if (e.isKeyDownEvent() && e.getEventValue() == shipToggleKey) {
                 isON = !isON;
-                engine.addFloatingTextAlways(playerShip.getLocation(), "SDM: " + isON, 40, Color.white, playerShip, 0, 0, 1f, 0.2f, 0.3f, 1);
+                text = "SDM: " + isON;
             }
             if (e.isKeyDownEvent() && e.getEventValue() == targetToggleKey) {
                 enemyIsOn = !enemyIsOn;
-                engine.addFloatingTextAlways(playerShip.getLocation(), "SDM enemy: " + enemyIsOn, 40, Color.white, playerShip, 0, 0, 1f, 0.2f, 0.3f, 1);
+                text = "SDM enemy: " + enemyIsOn;
             }
             if (e.isKeyDownEvent() && e.getEventValue() == allToggleKey) {
                 drawOnAll = !drawOnAll;
-                engine.addFloatingTextAlways(playerShip.getLocation(), "SDM All : " + drawOnAll, 40, Color.white, playerShip, 0, 0, 1f, 0.2f, 0.3f, 1);
+                text = "SDM All : " + drawOnAll;
+
             }
             if (e.isKeyDownEvent() && e.getEventValue() == fightersToggleKey) {
                 drawOnForFighters = !drawOnForFighters;
-                engine.addFloatingTextAlways(playerShip.getLocation(), "SDM fighters : " + drawOnForFighters, 40, Color.white, playerShip, 0, 0, 1f, 0.2f, 0.3f, 1);
+                text = "SDM fighters : " + drawOnForFighters;
             }
+            if (playerShip.getLocation() != null) engine.addFloatingTextAlways(playerShip.getLocation(), text, 40, Color.white, playerShip, 0, 0, 1f, 0.2f, 0.3f, 1);
+
         }
     }
 
